@@ -125,11 +125,11 @@ static const int ws_hoff_px = 4;
 static const int ws_voff_px = 3;
 
 /* Offset between two workspace buttons */
-static const int ws_spacing_px = 1;
+static const int ws_spacing_px = 0;
 
 /* Offset between the statusline and 1) workspace buttons on the left
  *                                   2) the tray or screen edge on the right */
-static const int sb_hoff_px = 4;
+static const int sb_hoff_px = 0;
 
 /* Additional offset between the tray and the statusline, if the tray is not empty */
 static const int tray_loff_px = 2;
@@ -301,16 +301,16 @@ void draw_statusline(i3_output *output, uint32_t clip_left, bool use_focus_color
 
             /* Draw the border. */
             draw_util_rectangle(&output->statusline_buffer, border_color,
-                                x, logical_px(1),
+                                x, 0,
                                 full_render_width,
-                                bar_height - logical_px(2));
+                                bar_height);
 
             /* Draw the background. */
             draw_util_rectangle(&output->statusline_buffer, bg_color,
                                 x + is_border * logical_px(block->border_left),
-                                logical_px(1) + is_border * logical_px(block->border_top),
+                                is_border * logical_px(block->border_top),
                                 full_render_width - is_border * logical_px(block->border_right + block->border_left),
-                                bar_height - is_border * logical_px(block->border_bottom + block->border_top) - logical_px(2));
+                                bar_height - is_border * logical_px(block->border_bottom + block->border_top));
         }
 
         draw_util_text(text, &output->statusline_buffer, fg_color, colors.bar_bg,
@@ -1975,16 +1975,16 @@ void draw_bars(bool unhide) {
                 /* Draw the border of the button. */
                 draw_util_rectangle(&(outputs_walk->buffer), border_color,
                                     workspace_width,
-                                    logical_px(1),
+                                    0,
                                     ws_walk->name_width + 2 * logical_px(ws_hoff_px) + 2 * logical_px(1),
-                                    bar_height - 2 * logical_px(1));
+                                    bar_height);
 
                 /* Draw the inside of the button. */
                 draw_util_rectangle(&(outputs_walk->buffer), bg_color,
                                     workspace_width + logical_px(1),
-                                    2 * logical_px(1),
+                                    logical_px(1),
                                     ws_walk->name_width + 2 * logical_px(ws_hoff_px),
-                                    bar_height - 4 * logical_px(1));
+                                    bar_height - 2 * logical_px(1));
 
                 draw_util_text(ws_walk->name, &(outputs_walk->buffer), fg_color, bg_color,
                                workspace_width + logical_px(ws_hoff_px) + logical_px(1),
@@ -2005,15 +2005,15 @@ void draw_bars(bool unhide) {
 
             draw_util_rectangle(&(outputs_walk->buffer), colors.binding_mode_border,
                                 workspace_width,
-                                logical_px(1),
+                                0,
                                 binding.width + 2 * logical_px(ws_hoff_px) + 2 * logical_px(1),
-                                bar_height - 2 * logical_px(1));
+                                bar_height);
 
             draw_util_rectangle(&(outputs_walk->buffer), bg_color,
                                 workspace_width + logical_px(1),
-                                2 * logical_px(1),
+                                logical_px(1),
                                 binding.width + 2 * logical_px(ws_hoff_px),
-                                bar_height - 4 * logical_px(1));
+                                bar_height - 2 * logical_px(1));
 
             draw_util_text(binding.name, &(outputs_walk->buffer), fg_color, bg_color,
                            workspace_width + logical_px(ws_hoff_px) + logical_px(1),
